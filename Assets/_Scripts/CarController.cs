@@ -18,7 +18,7 @@ public class CarController : MonoBehaviour
     void Awake()
     {
         // Pega o componente no início para não precisar fazer isso toda hora
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); // Usando InChildren caso o sprite esteja em um objeto filho
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
 
         if (carVisualTransform == null && spriteRenderer != null)
@@ -68,7 +68,12 @@ public class CarController : MonoBehaviour
         if (trashPrefabs.Length > 0 && Random.value < spawnProbabilityThisFrame)
         {
             int randomIndex = Random.Range(0, trashPrefabs.Length);
-            Instantiate(trashPrefabs[randomIndex], trashSpawnPoint.position, Quaternion.identity);
+
+            float randomX = Random.Range(-2f, 2f);
+            float randomY = Random.Range(-2f, 2f);
+            Vector3 spawnPosition = trashSpawnPoint.position + new Vector3(randomX, randomY, 0f);
+
+            Instantiate(trashPrefabs[randomIndex], spawnPosition, Quaternion.identity);
         }
     }
 
