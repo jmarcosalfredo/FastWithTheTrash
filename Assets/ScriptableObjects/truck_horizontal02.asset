@@ -16,6 +16,6 @@ MonoBehaviour:
   carSprite: {fileID: 3898529332852370402, guid: 54e9435d52f5e1a40943a5924ba11741, type: 3}
   boxColliderSize: {x: 4, y: 2}
   minSpeed: 8
-  maxSpeed: 12
+  maxSpeed: 9
   IsHorizontal: 1
   trashSpawnChance: 0.1

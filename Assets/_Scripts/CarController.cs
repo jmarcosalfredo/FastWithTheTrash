@@ -56,7 +56,7 @@ public class CarController : MonoBehaviour
         transform.Translate(Vector3.right * speed * moveDirection * Time.deltaTime);
 
         // Destrói o carro quando ele sai da tela (ajuste os valores para o tamanho da sua tela)
-        if (transform.position.x > 20f || transform.position.x < -20f)
+        if (transform.position.x > 26f || transform.position.x < -26f)
         {
             Destroy(gameObject);
         }

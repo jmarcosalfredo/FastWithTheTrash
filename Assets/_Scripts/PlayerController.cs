@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance != null)
         {
             GameManager.instance.UpdateInventoryUI(inventory.Count, maxInventorySize);
+            GameManager.instance.UpdateInventoryDetailUI(inventory);
         }
     }
 
@@ -97,6 +98,7 @@ public class PlayerController : MonoBehaviour
                 if (GameManager.instance != null)
                 {
                     GameManager.instance.UpdateInventoryUI(inventory.Count, maxInventorySize);
+                    GameManager.instance.UpdateInventoryDetailUI(inventory);
                 }
 
                 Debug.Log("Lixo coletado: " + trash.trashType + " (" + inventory.Count + "/" + maxInventorySize + ")");
@@ -156,6 +158,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance != null)
         {
             GameManager.instance.UpdateInventoryUI(inventory.Count, maxInventorySize);
+            GameManager.instance.UpdateInventoryDetailUI(inventory);
         }
     }
 

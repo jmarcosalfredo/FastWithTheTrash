@@ -1,7 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI; // Necessário para interagir com a UI
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro; // Para reiniciar a cena
+using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI inventoryText;
+
+    [Header("UI Inventário por Tipo")]
+    public TextMeshProUGUI papelCountText;
+    public TextMeshProUGUI plasticoCountText;
+    public TextMeshProUGUI metalCountText;
+    public TextMeshProUGUI vidroCountText;
+
     public GameObject gameOverPanel;
     public TextMeshProUGUI gameOverText;
 
@@ -37,6 +46,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = "" + score;
         timerText.text = "Tempo: " + Mathf.Round(gameTime);
         inventoryText.text = "0/0";
+        UpdateInventoryDetailUI(new List<TrashType>());
         gameOverPanel.SetActive(false);
     }
 
@@ -90,6 +100,18 @@ public class GameManager : MonoBehaviour
     public void UpdateInventoryUI(int currentCount, int maxCount)
     {
         inventoryText.text = currentCount + "/" + maxCount;
+    }
+
+    public void UpdateInventoryDetailUI(List<TrashType> inventory)
+    {
+        if (papelCountText != null)
+            papelCountText.text = "" + inventory.Count(t => t == TrashType.Papel);
+        if (plasticoCountText != null)
+            plasticoCountText.text = "" + inventory.Count(t => t == TrashType.Plastico);
+        if (metalCountText != null)
+            metalCountText.text = " " + inventory.Count(t => t == TrashType.Metal);
+        if (vidroCountText != null)
+            vidroCountText.text = "" + inventory.Count(t => t == TrashType.Vidro);
     }
 }
 

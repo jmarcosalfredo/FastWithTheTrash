@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarData
   carName: CarRed_horizontal
   carSprite: {fileID: 4005415185599843514, guid: f116ab0b0df225949a81d63e3bbedb25, type: 3}
+  boxColliderSize: {x: 1.5, y: 0.8}
   minSpeed: 8
-  maxSpeed: 12
+  maxSpeed: 9
   IsHorizontal: 1
   trashSpawnChance: 0.1
