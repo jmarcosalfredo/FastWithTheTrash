@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI metalCountText;
     public TextMeshProUGUI vidroCountText;
 
+    [Header("Pause")]
+    public GameObject pausePanel;
+    private bool isPaused = false;
+
     [Header("Game Over")]
     public GameObject gameOverPanel;
     public TextMeshProUGUI reasontxt;       // Exibe o motivo / título
@@ -48,11 +52,19 @@ public class GameManager : MonoBehaviour
         inventoryText.text = "0/0";
         UpdateInventoryDetailUI(new List<TrashType>());
         gameOverPanel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     void Update()
     {
         if (isGameOver) return;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
+        if (isPaused) return;
 
         gameTime -= Time.deltaTime;
         timerText.text = "Tempo: " + Mathf.Max(0, Mathf.RoundToInt(gameTime));
@@ -62,6 +74,15 @@ public class GameManager : MonoBehaviour
             WinGame();
         }
     }
+
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        pausePanel.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0 : 1;
+    }
+
+    public bool IsPaused => isPaused;
 
     public void AddScore(int amount)
     {
