@@ -7,9 +7,9 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // Padrão Singleton para acesso fácil
+    public static GameManager instance;
 
-    public float gameTime = 60f; // Duração do jogo em segundos
+    public float gameTime = 60f;
     private int score = 0;
     private bool isGameOver = false;
 
@@ -24,12 +24,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI metalCountText;
     public TextMeshProUGUI vidroCountText;
 
+    [Header("Game Over")]
     public GameObject gameOverPanel;
-    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI reasontxt;       // Exibe o motivo / título
+    public TextMeshProUGUI gameOverScoreText;  // Exibe a pontuação final
 
     void Awake()
     {
-        // Configuração do Singleton
         if (instance == null)
         {
             instance = this;
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Inicializa a UI
         scoreText.text = "" + score;
         timerText.text = "Tempo: " + Mathf.Round(gameTime);
         inventoryText.text = "0/0";
@@ -54,11 +54,9 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // Atualiza o cronômetro
         gameTime -= Time.deltaTime;
         timerText.text = "Tempo: " + Mathf.Max(0, Mathf.RoundToInt(gameTime));
 
-        // Condição de vitória (tempo acabou)
         if (gameTime <= 0)
         {
             WinGame();
@@ -76,27 +74,33 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
         isGameOver = true;
-        gameOverText.text = reason;
+        reasontxt.text = reason;
+        gameOverScoreText.text = "Pontuação Final: " + score;
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0; // Pausa o jogo
+        Time.timeScale = 0;
     }
 
     public void WinGame()
     {
         isGameOver = true;
-        gameOverText.text = "Tempo esgotado!\nPontuação Final: " + score;
+        reasontxt.text = "Tempo esgotado!";
+        gameOverScoreText.text = "Pontuação Final: " + score;
         gameOverPanel.SetActive(true);
-        Time.timeScale = 0; // Pausa o jogo
+        Time.timeScale = 0;
     }
 
-    // Função para ser chamada pelo botão de reiniciar
     public void RestartGame()
     {
-        Time.timeScale = 1; // Retoma o tempo
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Atualiza a UI do inventário do jogador
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void UpdateInventoryUI(int currentCount, int maxCount)
     {
         inventoryText.text = currentCount + "/" + maxCount;
@@ -114,4 +118,3 @@ public class GameManager : MonoBehaviour
             vidroCountText.text = "" + inventory.Count(t => t == TrashType.Vidro);
     }
 }
-

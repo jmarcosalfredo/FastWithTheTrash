@@ -9,15 +9,14 @@ public class CarController : MonoBehaviour
 
     // Referências de componentes
     private SpriteRenderer spriteRenderer;
-    [SerializeField] private Transform carVisualTransform; // Transform do objeto visual/animator do carro
-    [SerializeField] private bool visualFacesRightAtY0 = false; // true se o sprite já olha para a direita com Y = 0
-    public GameObject[] trashPrefabs; // Array para os 4 tipos de prefabs de lixo
-    public Transform trashSpawnPoint; // Ponto de onde o lixo é "jogado"
+    [SerializeField] private Transform carVisualTransform;
+    [SerializeField] private bool visualFacesRightAtY0 = false;
+    public GameObject[] trashPrefabs;
+    public Transform trashSpawnPoint;
     private BoxCollider2D boxCollider;
 
     void Awake()
     {
-        // Pega o componente no início para não precisar fazer isso toda hora
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
 
@@ -27,10 +26,8 @@ public class CarController : MonoBehaviour
         }
     }
 
-    // Esta é a função mais importante! O Spawner vai chamá-la para configurar o carro.
     public void Initialize(CarData data, bool moveToLeft = false)
     {
-        // Configura o visual
         if (spriteRenderer != null)
         {
             spriteRenderer.sprite = data.carSprite;
@@ -41,12 +38,10 @@ public class CarController : MonoBehaviour
             boxCollider.size = data.boxColliderSize;
         }
 
-        // Configura a velocidade (um valor aleatório entre o mínimo e o máximo)
         this.speed = Random.Range(data.minSpeed, data.maxSpeed);
         this.moveDirection = moveToLeft ? -1 : 1;
         UpdateVisualDirection();
 
-        // Configura a chance de soltar lixo
         this.trashSpawnChance = data.trashSpawnChance;
     }
 
@@ -55,10 +50,28 @@ public class CarController : MonoBehaviour
         TrySpawnTrash();
         transform.Translate(Vector3.right * speed * moveDirection * Time.deltaTime);
 
-        // Destrói o carro quando ele sai da tela (ajuste os valores para o tamanho da sua tela)
         if (transform.position.x > 26f || transform.position.x < -26f)
         {
             Destroy(gameObject);
+        }
+    }
+
+    // Cobre o caso em que o BoxCollider2D do carro é sólido
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        {
+            GameManager.instance?.GameOver("Você foi atropelado!");
+        }
+    }
+    
+
+    // Cobre o caso em que o BoxCollider2D do carro é Trigger
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<PlayerController>() != null)
+        {
+            GameManager.instance?.GameOver("Você foi atropelado!");
         }
     }
 

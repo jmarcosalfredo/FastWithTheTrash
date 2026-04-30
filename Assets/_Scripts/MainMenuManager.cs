@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] private GameObject tutorialTooltip;
+
     public void PlayGame()
     {
         SceneManager.LoadScene("Game");
@@ -15,5 +17,15 @@ public class MainMenuManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    public void OpenTooltip()
+    {
+        tutorialTooltip.SetActive(true);
+    }
+
+    public void CloseTooltip()
+    {
+        tutorialTooltip.SetActive(false);
     }
 }

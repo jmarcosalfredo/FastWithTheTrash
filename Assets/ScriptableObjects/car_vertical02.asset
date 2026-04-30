@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CarData
   carName: CarPolice_vertical
   carSprite: {fileID: -3363936778680477065, guid: 55a5a82735c63c545b09ba59f3bf923e, type: 3}
+  boxColliderSize: {x: 1.3, y: 0.8}
   minSpeed: 8
   maxSpeed: 12
   IsHorizontal: 1
