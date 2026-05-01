@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Pause")]
     public GameObject pausePanel;
+    [SerializeField] private GameObject tutorialTooltip;
     private bool isPaused = false;
 
     [Header("Game Over")]
@@ -73,6 +74,19 @@ public class GameManager : MonoBehaviour
         {
             WinGame();
         }
+
+        HandleTimeScale();
+    }
+
+    private void HandleTimeScale()
+    {
+        if (tutorialTooltip.activeSelf){
+            Time.timeScale = 0;
+        }
+
+        if (pausePanel.activeSelf == false && tutorialTooltip.activeSelf == false){
+            Time.timeScale = 1;
+        }
     }
 
     public void TogglePause()
@@ -83,6 +97,16 @@ public class GameManager : MonoBehaviour
     }
 
     public bool IsPaused => isPaused;
+
+    public void OpenTutorial()
+    {
+        tutorialTooltip.SetActive(true);
+    }
+
+    public void CloseTutorial()
+    {
+        tutorialTooltip.SetActive(false);
+    }
 
     public void AddScore(int amount)
     {
