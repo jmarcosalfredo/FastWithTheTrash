@@ -80,11 +80,13 @@ public class GameManager : MonoBehaviour
 
     private void HandleTimeScale()
     {
-        if (tutorialTooltip.activeSelf){
+        if (tutorialTooltip.activeSelf)
+        {
             Time.timeScale = 0;
         }
 
-        if (pausePanel.activeSelf == false && tutorialTooltip.activeSelf == false){
+        if (pausePanel.activeSelf == false && tutorialTooltip.activeSelf == false)
+        {
             Time.timeScale = 1;
         }
     }
@@ -111,6 +113,7 @@ public class GameManager : MonoBehaviour
     public void AddScore(int amount)
     {
         if (isGameOver) return;
+        AudioManager.instance?.PlayDiscardTrash();
         score += amount;
         scoreText.text = "" + score;
     }
@@ -119,6 +122,8 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
         isGameOver = true;
+        AudioManager.instance?.StopBackgroundMusic();
+        AudioManager.instance?.PlayGameOver();
         reasontxt.text = reason;
         gameOverScoreText.text = "Pontuação Final: " + score;
         gameOverPanel.SetActive(true);
@@ -137,12 +142,14 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1;
+        AudioManager.instance?.PlayBackgroundMusic();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void GoToMainMenu()
     {
         Time.timeScale = 1;
+        AudioManager.instance?.PlayBackgroundMusic();
         SceneManager.LoadScene("MainMenu");
     }
 

@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
             {
                 inventory.Add(trash.trashType);
                 Destroy(collision.gameObject);
+                AudioManager.instance?.PlayPickupTrash();
 
                 if (GameManager.instance != null)
                 {
